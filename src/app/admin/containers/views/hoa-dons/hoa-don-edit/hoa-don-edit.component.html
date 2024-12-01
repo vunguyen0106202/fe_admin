@@ -1,0 +1,84 @@
+<p-dialog #dialog header="Thêm/ Sửa Banner" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '80vw', height: '100vh'}" [baseZIndex]="10000">
+  <form [formGroup]="formGroup">
+    <!-- Các trường thông tin hóa đơn -->
+    <div class="form-group">
+      <label for="hoaDonId" class="col-sm-4 control-label">Mã hóa đơn</label>
+      <span>{{ modelEdit.id }}</span>
+    </div>
+    <div class="form-group">
+      <label for="fullName" class="col-sm-4 control-label">Tên khách hàng</label>
+        <span>{{ modelEdit.fullName }}</span>
+    </div>
+    <div class="form-group">
+      <label for="diaChi" class="col-sm-4 control-label">Địa chỉ</label>
+        <span>{{ modelEdit.diaChi }}</span>
+    </div>
+    <div class="form-group">
+      <label for="email" class="col-sm-4 control-label">Email</label>
+        <span>{{ modelEdit.email }}</span>
+    </div>
+    <div class="form-group">
+      <label for="sdt" class="col-sm-4 control-label">Số điện thoại</label>
+        <span>{{ modelEdit.sdt }}</span>
+    </div>
+    <div class="form-group">
+      <label for="ngayTao" class="col-sm-4 control-label">Ngày tạo</label>
+        <span>{{ modelEdit.hoaDon?.ngayTao }}</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="ghiChu" class="col-sm-4 control-label">Ghi chú</label>
+        <span>{{ modelEdit.hoaDon?.ghiChu }}</span>
+    </div>
+
+    <!-- Chi tiết sản phẩm -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Tên sản phẩm</th>
+          <th>Hình ảnh</th>
+          <th>Giá bán</th>
+          <th>Số lượng</th>
+          <th>Size</th>
+          <th>Màu sắc</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chiTiet of modelEdit.chiTietHoaDons">
+          <td>{{ chiTiet.ten }}</td>
+          <td *ngIf="chiTiet.hinh">
+            <img src="https://localhost:44302/Images/list-image-product/{{chiTiet.hinh}}" class="rounded mb-3" width="80">
+          </td>
+          <td>{{ chiTiet.giaBan }}</td>
+          <td>{{ chiTiet.soLuong }}</td>
+          <td>{{ chiTiet.size }}</td>
+          <td>{{ chiTiet.mauSac }}</td>
+          <td>{{ chiTiet.thanhTien }}</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <h4 style="font-weight: bold; text-underline-position: auto;" *ngIf="modelEdit.hoaDon?.tongTien">
+      Tổng tiền: {{ modelEdit.hoaDon?.tongTien | number:'1.0-0' }} VNĐ
+    </h4>
+
+    <!-- Trạng thái đơn hàng --> 
+  <div class="col-6 mb-20">
+    <div class="__input-wrapper" style="position: relative;">
+      <label for="trangThai">Trạng thái</label>
+        <p-dropdown [baseZIndex]="15000" 
+         [(ngModel)]="hd.trangThai" 
+        formControlName="trangThai" [options]="trangThaiOptions" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+    </div>    
+   </div>
+     
+    
+    
+
+  </form>
+  <p-footer>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+</p-dialog>
